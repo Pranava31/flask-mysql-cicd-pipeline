@@ -1,0 +1,80 @@
+<!DOCTY	PE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Learning Notes</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; padding: 2rem; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { text-align: center; color: #38bdf8; margin-bottom: 2rem; font-size: 2rem; }
+        .form-card { background: #1e293b; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px solid #334155; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.3rem; color: #94a3b8; font-size: 0.9rem; }
+        input, textarea, select { width: 100%; padding: 0.6rem; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: #e2e8f0; font-size: 1rem; }
+        textarea { height: 80px; resize: vertical; }
+        .btn { background: #2563eb; color: white; padding: 0.6rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; width: 100%; }
+        .btn:hover { background: #1d4ed8; }
+        .note { background: #1e293b; padding: 1.2rem; border-radius: 10px; margin-bottom: 1rem; border-left: 4px solid #2563eb; }
+        .note-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .note-title { font-size: 1.1rem; color: #38bdf8; }
+        .note-category { background: #334155; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; color: #94a3b8; }
+        .note-content { color: #cbd5e1; line-height: 1.5; margin-bottom: 0.5rem; }
+        .note-footer { display: flex; justify-content: space-between; align-items: center; }
+        .note-date { font-size: 0.8rem; color: #64748b; }
+        .delete-btn { color: #ef4444; text-decoration: none; font-size: 0.85rem; }
+        .delete-btn:hover { text-decoration: underline; }
+        .empty { text-align: center; color: #64748b; padding: 2rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DevOps Learning Notes</h1>
+
+        <div class="form-card">
+            <form method="POST" action="/">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" placeholder="e.g. Docker Networking Basics" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category">
+                        <option value="Docker">Docker</option>
+                        <option value="Jenkins">Jenkins</option>
+                        <option value="AWS">AWS</option>
+                        <option value="Kubernetes">Kubernetes</option>
+                        <option value="CI/CD">CI/CD</option>
+                        <option value="Linux">Linux</option>
+                        <option value="General">General</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="content">Notes</label>
+                    <textarea id="content" name="content" placeholder="Write your learning notes here..." required></textarea>
+                </div>
+                <button type="submit" class="btn">Save Note</button>
+            </form>
+        </div>
+
+        {% if notes %}
+            {% for note in notes %}
+            <div class="note">
+                <div class="note-header">
+                    <span class="note-title">{{ note[1] }}</span>
+                    <span class="note-category">{{ note[3] }}</span>
+                </div>
+                <p class="note-content">{{ note[2] }}</p>
+                <div class="note-footer">
+                    <span class="note-date">{{ note[4] }}</span>
+                    <a href="/delete/{{ note[0] }}" class="delete-btn" onclick="return confirm('Delete this note?')">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty">No notes yet. Start adding your DevOps learnings!</p>
+        {% endif %}
+    </div>
+</body>
+</html>
